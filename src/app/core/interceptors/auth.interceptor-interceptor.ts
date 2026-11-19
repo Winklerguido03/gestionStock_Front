@@ -4,9 +4,10 @@ import { environment } from '../../../environments/environment.development';
 import { catchError, throwError } from 'rxjs';
 import { isTokenExpired } from '../../shared/utils/jwt.utils';
 import { esValidacionDeCredenciales } from './error.interceptor-interceptor';
+import { AuthService } from '../services/auth.service';
 
 export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(authService);
+  const authService = inject(AuthService);
  // 1. Verificación de URL propia y endpoints públicos de autenticación
   const esApiPropia = req.url.startsWith(environment.apiUrl);
 

@@ -4,7 +4,7 @@ export const routes: Routes = [
      // Ruta raíz: redirige al inicio/dashboard
   {
     path: '',
-    redirectTo: 'inicio',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 

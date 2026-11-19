@@ -27,7 +27,68 @@
           <p class="text-muted small">Gestión de Stock</p>
         </div>
 
-        <form action="sesion" method="POST">
+        <form class="form-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <!-- Campo Correo / Username -->
+        <div class="field">
+          <label class="field__label" for="username">Correo Electrónico</label>
+          <input
+            id="username"
+            class="input"
+            type="email"
+            formControlName="username"
+            placeholder="ejemplo@correo.com"
+            autocomplete="email"
+          />
+          @if (username.touched && username.invalid) {
+            <p class="field__error" role="alert">
+              @if (username.hasError('required')) { El correo es obligatorio. }
+              @else if (username.hasError('email')) { Ingresá un correo electrónico válido. }
+            </p>
+          }
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div class="field">
+          <label class="field__label" for="password">Contraseña</label>
+          <input
+            id="password"
+            class="input"
+            type="password"
+            formControlName="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+          />
+          @if (password.touched && password.invalid) {
+            <p class="field__error" role="alert">
+              @if (password.hasError('required')) { La contraseña es obligatoria. }
+            </p>
+          }
+        </div>
+
+        <a class="login__olvide" routerLink="/olvide-password">¿Olvidaste tu contraseña?</a>
+
+        <!-- Mensaje de error global del servidor -->
+        @if (errorMessage()) {
+          <p class="field__error field__error--global" role="alert">
+            {{ errorMessage() }}
+          </p>
+        }
+
+        <!-- Botón de Envío -->
+        <div class="btn-group">
+          <button class="btn" type="submit" [disabled]="isLoading()">
+            {{ isLoading() ? 'Autenticando...' : 'Ingresar' }}
+          </button>
+        </div>
+
+
+        <p class="login__registro">
+        ¿No tenés cuenta? <a class="login__link" routerLink="/registro">Registrate</a>
+      </p>
+      
+      </form>
+
+
           
           <div class="mb-3">
             <label for="txtUsername" class="form-label fw-semibold">NOMBRE DE USUARIO</label>
@@ -49,7 +110,7 @@
             <button type="submit" class="btn btn-primary btn-lg shadow-sm">Ingresar</button>
           </div>
 
-        </form>
+      
 
       </div>
     </main>

@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 /**
  * NUEVO: redirección al login recordando a dónde quería ir el usuario
