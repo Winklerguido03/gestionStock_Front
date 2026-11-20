@@ -30,14 +30,12 @@
         <form class="form-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <!-- Campo Correo / Username -->
         <div class="field">
-          <label class="field__label" for="username">Correo Electrónico</label>
+          <label class="field__label" for="username">Nombre De Usuario</label>
           <input
             id="username"
             class="input"
-            type="email"
             formControlName="username"
-            placeholder="ejemplo@correo.com"
-            autocomplete="email"
+            placeholder="Admin"
           />
           @if (username.touched && username.invalid) {
             <p class="field__error" role="alert">
@@ -65,7 +63,6 @@
           }
         </div>
 
-        <a class="login__olvide" routerLink="/olvide-password">¿Olvidaste tu contraseña?</a>
 
         <!-- Mensaje de error global del servidor -->
         @if (errorMessage()) {
@@ -80,37 +77,8 @@
             {{ isLoading() ? 'Autenticando...' : 'Ingresar' }}
           </button>
         </div>
-
-
-        <p class="login__registro">
-        ¿No tenés cuenta? <a class="login__link" routerLink="/registro">Registrate</a>
-      </p>
       
       </form>
-
-
-          
-          <div class="mb-3">
-            <label for="txtUsername" class="form-label fw-semibold">NOMBRE DE USUARIO</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-person"></i></span>
-              <input type="text" class="form-control" name="txtUsername" id="txtUsername" placeholder="Admin123" required />
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label for="txtPass" class="form-label fw-semibold">CONTRASEÑA</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-lock"></i></span>
-              <input type="password" class="form-control" name="txtPass" id="txtPass" placeholder="Contraseña" required />
-            </div>
-          </div>
-
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg shadow-sm">Ingresar</button>
-          </div>
-
-      
 
       </div>
     </main>
