@@ -1,1 +1,114 @@
-<p>inicio works!</p>
+<header>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/inicio">DISTRIBUIDORA</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/productos">PRODUCTOS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/proveedores">PROVEEDORES</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/categorias">CATEGORIAS</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+ 
+ <div class="container mt-4">
+
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-3">
+
+                  <h2>Productos</h2>
+
+                  <div class="botonesIngresoEgreso">
+                      <a href="" class="btn btn-success">
+
+                                            <i class="bi bi-plus-circle"></i>
+                                            NUEVO INGRESO
+
+                                        </a>
+                                        <a href=""
+                                                             class="btn btn-success">
+
+                                                              <i class="bi bi-plus-circle"></i>
+                                                              NUEVO EGRESO
+
+                                                          </a>
+                  </div>
+
+
+              </div>
+              <div class="table-responsive">
+              <table class="table table-striped table-hover table-bordered align-middle">
+
+                  <thead class="table-dark">
+
+                  <tr>
+
+                      <th>Nombre</th>
+                      <th>Categoría</th>
+                      <th>Proveedor</th>
+                      <th>Precio Compra</th>
+                      <th>Precio Venta</th>
+                      <th>Stock</th>
+                      <th>   </th>
+
+                  </tr>
+
+                  </thead>
+
+                  <tbody>
+
+                      <tr>
+
+                          <td>nombre</td>
+
+                          <td>categoria</td>
+
+                          <td>proveedor</td>
+
+                          <td>precioCompra</td>
+
+                          <td>precioVenta</td>
+
+                          <td>stock</td>
+
+                          <td>
+
+                              <a href=""
+                                 class="btn btn-warning btn-sm">
+
+                                  Editar
+
+                              </a>
+
+                          </td>
+
+                      </tr>
+
+                  </tbody>
+
+              </table>
+              </div>
+          </div>
+
+
+</main>

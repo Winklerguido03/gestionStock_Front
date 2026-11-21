@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+
+interface ProductoMayorStock {
+  nombre: string;
+  stock: number;
+}
 
 @Component({
   selector: 'app-inicio',
@@ -7,5 +12,13 @@ import { Component } from '@angular/core';
   styleUrl: './inicio.css',
 })
 export class Inicio {
+
+    totalProductos = signal<number>(0);
+  totalCategorias = signal<number>(0);
+  totalProveedores = signal<number>(0);
+  stockTotal = signal<number>(0);
+  productosSinStock = signal<number>(0);
+  productosConStock = signal<number>(0);
+  productoMayorStock = signal<ProductoMayorStock | null>(null);
 
 }
