@@ -8,10 +8,15 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 
-  // Login: protegido con guestGuard (si ya está logueado, redirige a /inicio)
+  
   {
     path: 'login',
     loadComponent: () => import('./features/login/login').then((m) => m.Login),
+  },
+  
+  {
+    path: 'inicio',
+    loadComponent: () => import('./features/inicio/inicio').then((m) => m.Inicio),
   },
 
 ];
