@@ -5,6 +5,7 @@ import { LoginRequest } from '../../core/models/auth.model';
 import { finalize } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { email } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-login',
@@ -24,15 +25,15 @@ export class Login {
 
   // Formulario fortemente tipado con nonNullable
   public form = this.fb.nonNullable.group({
-    username: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email]],
     // EDITADO: sin mínimo de largo. Cambiar/restablecer contraseña aceptan 6 caracteres,
     // así que exigir 8 acá dejaba afuera a esas cuentas. La validez la decide el back.
     password: ['', [Validators.required]],
   });
 
   // Getters para facilitar lectura en la plantilla
-  get username() {
-    return this.form.controls.username;
+  get email() {
+    return this.form.controls.email;
   }
   get password() {
     return this.form.controls.password;

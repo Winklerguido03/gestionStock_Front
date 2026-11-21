@@ -20,7 +20,8 @@ const payload = decodeJwtPayload(token);
 if (!payload) return null;
 return {
 id: payload.id,
-username: payload.sub, // "sub": "grupo@gmail.com"
+email:payload.sub,
+username: payload.sub, 
 role: payload.rol as Role, // "rol": "GRUPO"
 };
  }

@@ -18,19 +18,19 @@
         <form class="form-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <!-- Campo Correo / Username -->
         <div class="field">
-          <label class="field__label" for="username">Correo Electrónico</label>
+          <label class="field__label" for="email">Correo Electrónico</label>
           <input
-            id="username"
+            id="email"
             class="input"
             type="email"
-            formControlName="username"
+            formControlName="email"
             placeholder="ejemplo@correo.com"
             autocomplete="email"
           />
-          @if (username.touched && username.invalid) {
+          @if (email.touched && email.invalid) {
             <p class="field__error" role="alert">
-              @if (username.hasError('required')) { El correo es obligatorio. }
-              @else if (username.hasError('email')) { Ingresá un correo electrónico válido. }
+              @if (email.hasError('required')) { El correo es obligatorio. }
+              @else if (email.hasError('email')) { Ingresá un correo electrónico válido. }
             </p>
           }
         </div>

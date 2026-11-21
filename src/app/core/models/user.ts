@@ -1,6 +1,7 @@
 export interface User
 { id: number; // = id
-username: string; // = sub
+username: string;// = sub
+email:string; 
 role: Role; // = rol
 }
 

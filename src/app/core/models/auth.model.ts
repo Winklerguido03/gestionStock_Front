@@ -1,10 +1,10 @@
 export interface LoginRequest {
-  username: string;   // es el email
+  email: string;   // es el email
   password: string;
 }
 
 export interface UsuarioCreateRequest {
-  username: string;     // email válido (@NotNull + @Email)
+  email: string;     // email válido (@NotNull + @Email)
   password: string;     // entre 8 y 20 caracteres
 }
 
