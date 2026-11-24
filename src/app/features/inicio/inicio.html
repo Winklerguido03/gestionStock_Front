@@ -1,59 +1,72 @@
-<header>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/inicio">DISTRIBUIDORA</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/productos">PRODUCTOS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/proveedores">PROVEEDORES</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/categorias">CATEGORIAS</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
-
 <main>
  
+<!-- Ventana Modal Flotante para Entrada / Salida de Stock -->
+@if (productoSeleccionado) {
+  <!-- Fondo oscuro que bloquea el resto de la pantalla -->
+  <div class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.55);">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg border-0">
+
+        <!-- Cabecera verde (ENTRADA) o roja (SALIDA) -->
+        <div class="modal-header text-white"
+             [class.bg-success]="tipoMovimiento === 'ENTRADA'"
+             [class.bg-danger]="tipoMovimiento === 'SALIDA'">
+          <h5 class="modal-title mb-0">
+            {{ tipoMovimiento === 'ENTRADA' ? 'Registrar Ingreso' : 'Registrar Egreso' }} de Stock
+          </h5>
+          <button type="button" class="btn-close btn-close-white" (click)="cerrarMovimiento()"></button>
+        </div>
+
+        <!-- Cuerpo del modal -->
+        <div class="modal-body">
+          <div class="mb-3 p-2 bg-light rounded border">
+            <div class="fw-bold">{{ productoSeleccionado.nombreProducto }}</div>
+            <small class="text-muted">Stock actual disponible: <strong>{{ productoSeleccionado.stock }} u.</strong></small>
+          </div>
+
+          @if (errorMovimiento) {
+            <div class="alert alert-danger py-2">{{ errorMovimiento }}</div>
+          }
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Cantidad</label>
+            <input type="number" class="form-control" min="1"
+                   [max]="tipoMovimiento === 'SALIDA' ? productoSeleccionado.stock : null"
+                   [(ngModel)]="cantidadMovimiento" />
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label fw-bold">Motivo / Observación (opcional)</label>
+            <input type="text" class="form-control"
+                   [placeholder]="tipoMovimiento === 'ENTRADA' ? 'Ej: Compra a proveedor' : 'Ej: Venta / Consumo'"
+                   [(ngModel)]="motivoMovimiento" />
+          </div>
+        </div>
+
+        <!-- Pie con botones -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="cerrarMovimiento()">
+            Cancelar
+          </button>
+          <button type="button" class="btn"
+                  [class.btn-success]="tipoMovimiento === 'ENTRADA'"
+                  [class.btn-danger]="tipoMovimiento === 'SALIDA'"
+                  [disabled]="guardandoMovimiento"
+                  (click)="confirmarMovimiento()">
+            {{ guardandoMovimiento ? 'Guardando...' : 'Confirmar' }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+}
+  
  <div class="container mt-4">
 
               <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-3">
 
                   <h2>Productos</h2>
-
-                  <div class="botonesIngresoEgreso">
-                      <a href="" class="btn btn-success">
-
-                                            <i class="bi bi-plus-circle"></i>
-                                            NUEVO INGRESO
-
-                                        </a>
-                                        <a href=""
-                                                             class="btn btn-success">
-
-                                                              <i class="bi bi-plus-circle"></i>
-                                                              NUEVO EGRESO
-
-                                                          </a>
-                  </div>
-
 
               </div>
 
@@ -79,6 +92,7 @@
                       <th>Precio Compra</th>
                       <th>Precio Venta</th>
                       <th>Stock</th>
+                      <th class="text-center">Acciones</th>
                       <th>   </th>
 
                   </tr>
@@ -102,6 +116,17 @@
                           <td>${{ prod.precioVenta }}</td>
 
                           <td>{{ prod.stock }}</td>
+
+                          <!-- En <thead> -->
+                   
+                          <td class="text-center">
+                             <button class="btn btn-sm btn-success me-1" (click)="abrirMovimiento(prod, 'ENTRADA')">
+                                     + Ingreso
+                             </button>
+                             <button class="btn btn-sm btn-danger" [disabled]="prod.stock === 0" (click)="abrirMovimiento(prod, 'SALIDA')">
+                                     - Egreso
+                             </button>
+                          </td>
 
                           <td>
 

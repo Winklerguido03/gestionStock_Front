@@ -1,10 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProductoService } from '../../core/services/producto.service';
 import { Producto } from '../../core/models/producto';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-inicio',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
 })
