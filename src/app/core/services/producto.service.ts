@@ -13,4 +13,14 @@ export class ProductoService {
   getProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.apiUrl);
   }
+
+  registrarMovimiento(movimiento: {
+  idProducto: number;
+  tipo: 'ENTRADA' | 'SALIDA';
+  cantidad: number;
+  motivo: string;
+}): Observable<any> {
+  return this.http.post('http://localhost:8080/api/v1/movimientos', movimiento);
+}
+
 }
