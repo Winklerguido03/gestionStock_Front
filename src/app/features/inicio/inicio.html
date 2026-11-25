@@ -74,6 +74,14 @@
 
               </div>
 
+               <div class="col-md-3 mb-3">
+                   <label class="form-label fw-bold">Ordenar por stock</label>
+               <select class="form-select" [value]="ordenStock()" (change)="cambiarOrdenStock($any($event.target).value)">
+                   <option value="defecto">Orden por defecto</option>
+                   <option value="menor">Menor stock primero</option>
+                   <option value="mayor">Mayor stock primero</option>
+               </select>
+               </div>
 
               <div class="table-responsive">
                 @if (cargando()) {

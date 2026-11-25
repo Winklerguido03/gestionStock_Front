@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ProductoService } from '../../core/services/producto.service';
 import { Producto } from '../../core/models/producto';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +27,8 @@ export class Inicio implements OnInit{
       next: (data) => {
         this.productos.set(data);
         this.cargando.set(false);
+        this.productosOriginales = [...data];
+        this.ordenStock.set('defecto');
       },
       error: (err) => {
         console.error('Error al traer productos:', err);
@@ -35,6 +37,8 @@ export class Inicio implements OnInit{
       },
     });
   }
+
+//INGRESO Y EGRESO
 
 // Variables para el formulario de movimiento
 productoSeleccionado: Producto | null = null;
@@ -90,6 +94,8 @@ confirmarMovimiento(): void {
     }
   });
 }
+
+//MODAL NUEVO PRODUCTO
 
 // Listas para los <select> del modal de Nuevo Producto
 listaCategorias: { idCategoria: number; nombreCategoria: string }[] = [];
@@ -163,6 +169,23 @@ guardarNuevoProducto(): void {
       this.errorNuevoProducto = err.error?.message || 'Error al guardar el producto.';
     }
   });
+}
+
+//ORDENAR DE MAYOR A MENOR Y DE MENOR A MAYOR
+
+productosOriginales: Producto[] = [];
+ordenStock = signal<string>('defecto'); // 'defecto' | 'menor' | 'mayor'
+
+cambiarOrdenStock(valor: string): void {
+  this.ordenStock.set(valor);
+
+  if (valor === 'menor') {
+    this.productos.update(lista => [...lista].sort((a, b) => a.stock - b.stock));
+  } else if (valor === 'mayor') {
+    this.productos.update(lista => [...lista].sort((a, b) => b.stock - a.stock));
+  } else {
+    this.productos.set([...this.productosOriginales]);
+  }
 }
 
 }
