@@ -23,4 +23,23 @@ export class ProductoService {
   return this.http.post('http://localhost:8080/api/v1/movimientos', movimiento);
 }
 
+obtenerCategorias(): Observable<any[]> {
+  return this.http.get<any[]>('http://localhost:8080/api/v1/categorias');
+}
+
+obtenerProveedores(): Observable<any[]> {
+  return this.http.get<any[]>('http://localhost:8080/api/v1/proveedores');
+}
+
+crearProducto(producto: {
+  nombreProducto: string;
+  precioCompra: number;
+  precioVenta: number;
+  stock: number;
+  idCategoria: number;
+  idProveedor: number;
+}): Observable<any> {
+  return this.http.post('http://localhost:8080/api/v1/productos', producto);
+}
+
 }
