@@ -91,6 +91,10 @@ confirmarMovimiento(): void {
   });
 }
 
+// Listas para los <select> del modal de Nuevo Producto
+listaCategorias: { idCategoria: number; nombreCategoria: string }[] = [];
+listaProveedores: { idProveedor: number; nombreProveedor: string }[] = [];
+
 
 
 }
