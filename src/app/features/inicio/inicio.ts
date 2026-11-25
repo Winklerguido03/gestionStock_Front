@@ -95,6 +95,74 @@ confirmarMovimiento(): void {
 listaCategorias: { idCategoria: number; nombreCategoria: string }[] = [];
 listaProveedores: { idProveedor: number; nombreProveedor: string }[] = [];
 
+// Estado del modal de Nuevo Producto
+mostrarModalNuevo: boolean = false;
+guardandoProducto: boolean = false;
+errorNuevoProducto: string = '';
 
+nuevoProducto = {
+  nombreProducto: '',
+  precioCompra: 0,
+  precioVenta: 0,
+  stock: 0,
+  idCategoria: 0,
+  idProveedor: 0
+};
+
+abrirModalNuevoProducto(): void {
+  this.mostrarModalNuevo = true;
+  this.errorNuevoProducto = '';
+  this.nuevoProducto = {
+    nombreProducto: '',
+    precioCompra: 0,
+    precioVenta: 0,
+    stock: 0,
+    idCategoria: 0,
+    idProveedor: 0
+  };
+
+  // Carga categorías y proveedores desde el backend
+  this.productoService.obtenerCategorias().subscribe(cats => this.listaCategorias = cats);
+  this.productoService.obtenerProveedores().subscribe(provs => this.listaProveedores = provs);
+}
+
+cerrarModalNuevoProducto(): void {
+  this.mostrarModalNuevo = false;
+  this.errorNuevoProducto = '';
+}
+
+guardarNuevoProducto(): void {
+  if (!this.nuevoProducto.nombreProducto.trim()) {
+    this.errorNuevoProducto = 'Ingresa el nombre del producto.';
+    return;
+  }
+  if (!this.nuevoProducto.idCategoria || !this.nuevoProducto.idProveedor) {
+    this.errorNuevoProducto = 'Selecciona una categoría y un proveedor.';
+    return;
+  }
+  if (this.nuevoProducto.precioCompra < 0 || this.nuevoProducto.precioVenta < 0 || this.nuevoProducto.stock < 0) {
+    this.errorNuevoProducto = 'Los precios y el stock no pueden ser negativos.';
+    return;
+  }
+
+  this.guardandoProducto = true;
+  this.errorNuevoProducto = '';
+
+  this.productoService.crearProducto({
+    ...this.nuevoProducto,
+    idCategoria: Number(this.nuevoProducto.idCategoria),
+    idProveedor: Number(this.nuevoProducto.idProveedor)
+  }).subscribe({
+    next: () => {
+      this.guardandoProducto = false;
+      this.cerrarModalNuevoProducto();
+      this.cargarProductos(); // Refresca la tabla al instante
+    },
+    error: (err) => {
+      this.guardandoProducto = false;
+      this.errorNuevoProducto = err.error?.message || 'Error al guardar el producto.';
+    }
+  });
+}
 
 }
