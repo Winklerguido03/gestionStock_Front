@@ -153,5 +153,78 @@
               </div>
           </div>
 
+          <!-- Ventana Modal para Registrar Nuevo Producto -->
+@if (mostrarModalNuevo) {
+  <div class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.55);">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content shadow-lg border-0">
+
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title mb-0">Registrar Nuevo Producto</h5>
+          <button type="button" class="btn-close btn-close-white" (click)="cerrarModalNuevoProducto()"></button>
+        </div>
+
+        <div class="modal-body">
+          @if (errorNuevoProducto) {
+            <div class="alert alert-danger py-2">{{ errorNuevoProducto }}</div>
+          }
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label fw-bold">Nombre del producto</label>
+              <input type="text" class="form-control" placeholder="Ej: Papas Fritas Clásicas 400g"
+                     [(ngModel)]="nuevoProducto.nombreProducto" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Categoría</label>
+              <select class="form-select" [(ngModel)]="nuevoProducto.idCategoria">
+                <option [ngValue]="0" disabled>Seleccione una categoría...</option>
+                @for (cat of listaCategorias; track cat.idCategoria) {
+                  <option [ngValue]="cat.idCategoria">{{ cat.nombreCategoria }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Proveedor</label>
+              <select class="form-select" [(ngModel)]="nuevoProducto.idProveedor">
+                <option [ngValue]="0" disabled>Seleccione un proveedor...</option>
+                @for (prov of listaProveedores; track prov.idProveedor) {
+                  <option [ngValue]="prov.idProveedor">{{ prov.nombreProveedor }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Precio Compra ($)</label>
+              <input type="number" class="form-control" min="0" [(ngModel)]="nuevoProducto.precioCompra" />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Precio Venta ($)</label>
+              <input type="number" class="form-control" min="0" [(ngModel)]="nuevoProducto.precioVenta" />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Stock Inicial</label>
+              <input type="number" class="form-control" min="0" [(ngModel)]="nuevoProducto.stock" />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="cerrarModalNuevoProducto()">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-primary" [disabled]="guardandoProducto" (click)="guardarNuevoProducto()">
+            {{ guardandoProducto ? 'Guardando...' : 'Guardar Producto' }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+}
 
 </main>
