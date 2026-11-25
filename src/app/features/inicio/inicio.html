@@ -9,10 +9,10 @@
 
         <!-- Cabecera verde (ENTRADA) o roja (SALIDA) -->
         <div class="modal-header text-white"
-             [class.bg-success]="tipoMovimiento === 'ENTRADA'"
-             [class.bg-danger]="tipoMovimiento === 'SALIDA'">
+             [class.bg-success]="tipoMovimiento === 'INGRESO'"
+             [class.bg-danger]="tipoMovimiento === 'EGRESO'">
           <h5 class="modal-title mb-0">
-            {{ tipoMovimiento === 'ENTRADA' ? 'Registrar Ingreso' : 'Registrar Egreso' }} de Stock
+            {{ tipoMovimiento === 'INGRESO' ? 'Registrar Ingreso' : 'Registrar Egreso' }} de Stock
           </h5>
           <button type="button" class="btn-close btn-close-white" (click)="cerrarMovimiento()"></button>
         </div>
@@ -31,14 +31,14 @@
           <div class="mb-3">
             <label class="form-label fw-bold">Cantidad</label>
             <input type="number" class="form-control" min="1"
-                   [max]="tipoMovimiento === 'SALIDA' ? productoSeleccionado.stock : null"
+                   [max]="tipoMovimiento === 'EGRESO' ? productoSeleccionado.stock : null"
                    [(ngModel)]="cantidadMovimiento" />
           </div>
 
           <div class="mb-2">
             <label class="form-label fw-bold">Motivo / Observación (opcional)</label>
             <input type="text" class="form-control"
-                   [placeholder]="tipoMovimiento === 'ENTRADA' ? 'Ej: Compra a proveedor' : 'Ej: Venta / Consumo'"
+                   [placeholder]="tipoMovimiento === 'INGRESO' ? 'Ej: Compra a proveedor' : 'Ej: Venta / Consumo'"
                    [(ngModel)]="motivoMovimiento" />
           </div>
         </div>
@@ -49,8 +49,8 @@
             Cancelar
           </button>
           <button type="button" class="btn"
-                  [class.btn-success]="tipoMovimiento === 'ENTRADA'"
-                  [class.btn-danger]="tipoMovimiento === 'SALIDA'"
+                  [class.btn-success]="tipoMovimiento === 'INGRESO'"
+                  [class.btn-danger]="tipoMovimiento === 'EGRESO'"
                   [disabled]="guardandoMovimiento"
                   (click)="confirmarMovimiento()">
             {{ guardandoMovimiento ? 'Guardando...' : 'Confirmar' }}
@@ -120,10 +120,10 @@
                           <!-- En <thead> -->
                    
                           <td class="text-center">
-                             <button class="btn btn-sm btn-success me-1" (click)="abrirMovimiento(prod, 'ENTRADA')">
+                             <button class="btn btn-sm btn-success me-1" (click)="abrirMovimiento(prod, 'INGRESO')">
                                      + Ingreso
                              </button>
-                             <button class="btn btn-sm btn-danger" [disabled]="prod.stock === 0" (click)="abrirMovimiento(prod, 'SALIDA')">
+                             <button class="btn btn-sm btn-danger" [disabled]="prod.stock === 0" (click)="abrirMovimiento(prod, 'EGRESO')">
                                      - Egreso
                              </button>
                           </td>

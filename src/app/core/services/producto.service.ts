@@ -16,7 +16,7 @@ export class ProductoService {
 
   registrarMovimiento(movimiento: {
   idProducto: number;
-  tipo: 'ENTRADA' | 'SALIDA';
+  tipo: 'INGRESO' | 'EGRESO';
   cantidad: number;
   motivo: string;
 }): Observable<any> {

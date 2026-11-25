@@ -38,13 +38,13 @@ export class Inicio implements OnInit{
 
 // Variables para el formulario de movimiento
 productoSeleccionado: Producto | null = null;
-tipoMovimiento: 'ENTRADA' | 'SALIDA' = 'ENTRADA';
+tipoMovimiento: 'INGRESO' | 'EGRESO' = 'INGRESO';
 cantidadMovimiento: number = 1;
 motivoMovimiento: string = '';
 errorMovimiento: string = '';
 guardandoMovimiento: boolean = false;
 
-abrirMovimiento(producto: Producto, tipo: 'ENTRADA' | 'SALIDA'): void {
+abrirMovimiento(producto: Producto, tipo: 'INGRESO' | 'EGRESO'): void {
   this.productoSeleccionado = producto;
   this.tipoMovimiento = tipo;
   this.cantidadMovimiento = 1;
@@ -65,7 +65,7 @@ confirmarMovimiento(): void {
     return;
   }
 
-  if (this.tipoMovimiento === 'SALIDA' && this.cantidadMovimiento > this.productoSeleccionado.stock) {
+  if (this.tipoMovimiento === 'EGRESO' && this.cantidadMovimiento > this.productoSeleccionado.stock) {
     this.errorMovimiento = `No puedes sacar más de ${this.productoSeleccionado.stock} unidades.`;
     return;
   }
