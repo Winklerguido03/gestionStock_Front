@@ -178,6 +178,7 @@ ordenStock = signal<string>('defecto'); // 'defecto' | 'menor' | 'mayor'
 
 cambiarOrdenStock(valor: string): void {
   this.ordenStock.set(valor);
+  this.aplicarFiltrosYOrden();
 
   if (valor === 'menor') {
     this.productos.update(lista => [...lista].sort((a, b) => a.stock - b.stock));
@@ -186,6 +187,37 @@ cambiarOrdenStock(valor: string): void {
   } else {
     this.productos.set([...this.productosOriginales]);
   }
+}
+
+//BUSCAR PRODUCTO POR NOMBRE
+
+textoBusqueda = signal<string>('');
+
+buscarProducto(texto: string): void {
+  this.textoBusqueda.set(texto);
+  this.aplicarFiltrosYOrden();
+}
+
+private aplicarFiltrosYOrden(): void {
+  let resultado = [...this.productosOriginales];
+
+  // 1. Filtrar por nombre (sin importar mayúsculas o minúsculas)
+  const termino = this.textoBusqueda().toLowerCase().trim();
+  if (termino !== '') {
+    resultado = resultado.filter(p =>
+      p.nombreProducto.toLowerCase().includes(termino)
+    );
+  }
+
+  // 2. Ordenar por stock (para combinar ordenar stock y buscar)
+  const orden = this.ordenStock();
+  if (orden === 'menor') {
+    resultado.sort((a, b) => a.stock - b.stock);
+  } else if (orden === 'mayor') {
+    resultado.sort((a, b) => b.stock - a.stock);
+  }
+
+  this.productos.set(resultado);
 }
 
 }
