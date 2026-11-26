@@ -29,6 +29,10 @@ export class Inicio implements OnInit{
         this.cargando.set(false);
         this.productosOriginales = [...data];
         this.ordenStock.set('defecto');
+
+        // <-- Verifica que estas 2 líneas estén aquí adentro:
+      this.categoriasFiltro.set([...new Set(data.map(p => p.nombreCategoria).filter(Boolean))].sort());
+      this.proveedoresFiltro.set([...new Set(data.map(p => p.nombreProveedor).filter(Boolean))].sort());
       },
       error: (err) => {
         console.error('Error al traer productos:', err);
@@ -190,7 +194,6 @@ cambiarOrdenStock(valor: string): void {
 }
 
 //BUSCAR PRODUCTO POR NOMBRE
-
 textoBusqueda = signal<string>('');
 
 buscarProducto(texto: string): void {
@@ -201,7 +204,7 @@ buscarProducto(texto: string): void {
 private aplicarFiltrosYOrden(): void {
   let resultado = [...this.productosOriginales];
 
-  // 1. Filtrar por nombre (sin importar mayúsculas o minúsculas)
+  // 1. Filtrar por nombre
   const termino = this.textoBusqueda().toLowerCase().trim();
   if (termino !== '') {
     resultado = resultado.filter(p =>
@@ -209,7 +212,19 @@ private aplicarFiltrosYOrden(): void {
     );
   }
 
-  // 2. Ordenar por stock (para combinar ordenar stock y buscar)
+  // 2. Filtrar por categoría
+  const cat = this.categoriaSeleccionada();
+  if (cat !== '') {
+    resultado = resultado.filter(p => p.nombreCategoria === cat);
+  }
+
+  // 3. Filtrar por proveedor
+  const prov = this.proveedorSeleccionado();
+  if (prov !== '') {
+    resultado = resultado.filter(p => p.nombreProveedor === prov);
+  }
+
+  // 4. Ordenar por stock
   const orden = this.ordenStock();
   if (orden === 'menor') {
     resultado.sort((a, b) => a.stock - b.stock);
@@ -218,6 +233,32 @@ private aplicarFiltrosYOrden(): void {
   }
 
   this.productos.set(resultado);
+}
+
+//FILTRO POR CATEGORIA Y PROVEEDOR
+
+categoriaSeleccionada = signal<string>('');
+proveedorSeleccionado = signal<string>('');
+
+categoriasFiltro = signal<string[]>([]);
+proveedoresFiltro = signal<string[]>([]);
+
+filtrarPorCategoria(categoria: string): void {
+  this.categoriaSeleccionada.set(categoria);
+  this.aplicarFiltrosYOrden();
+}
+
+filtrarPorProveedor(proveedor: string): void {
+  this.proveedorSeleccionado.set(proveedor);
+  this.aplicarFiltrosYOrden();
+}
+
+limpiarFiltros(): void {
+  this.textoBusqueda.set('');
+  this.categoriaSeleccionada.set('');
+  this.proveedorSeleccionado.set('');
+  this.ordenStock.set('defecto');
+  this.aplicarFiltrosYOrden();
 }
 
 }
